@@ -7,17 +7,16 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+const config = require("./config/key");
+
 const { User } = require("./models/User");
 
 const mongoose = require("mongoose");
 mongoose
-  .connect(
-    "mongodb+srv://w0no:gh1163229@boilerplate.6pfbt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(config.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
 
