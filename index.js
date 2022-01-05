@@ -23,6 +23,8 @@ mongoose
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
+app.get("/api/hello", (req, res) => res.send("Hello ~~~~~"));
+
 app.post("/api/users/register", (req, res) => {
   // 회원 가입할 때 넣는 정보들을 client에서 가져오면
   // 그것들을 데이터베이스에 넣어준다.
@@ -77,6 +79,14 @@ app.get("/api/users/auth", auth, (req, res) => {
     lastname: req.user.lastname,
     role: req.user.role,
     image: req.user.image,
+  });
+});
+
+app.get("/api/users/logout", auth, (req, res) => {
+  console.log(req);
+  User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).send({ success: true });
   });
 });
 
